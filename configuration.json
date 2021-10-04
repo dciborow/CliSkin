@@ -1,0 +1,5 @@
+{
+    "desired_types" : ["ICommand"],
+    "interface_path" : "C:\\gitrepogrecoe\\CliSkin\\interfaces",
+    "implementation_path" : "C:\\gitrepogrecoe\\CliSkin\\implementations"
+}
