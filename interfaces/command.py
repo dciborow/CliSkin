@@ -58,6 +58,7 @@ class ICommand(ABC):
 
         flags = []
         for arg in arguments:
+            # Now add stuff to the command line
             if arg[0].klass:
                 command_line.append(arg[0].get_command())
                 command_line.append(arg[1])

@@ -36,43 +36,6 @@ class CommandArgs:
         else:
             self.__add_individual_argument(arg.name, arg)
 
-    def __add_list_argument(self, arg:Argument):
-        if arg.klass is None:
-            # It's a flag
-            if arg.destination:
-                self.parser.add_argument(
-                    *(arg.name),
-                    dest=arg.destination,
-                    action='store_true',
-                    default=False,
-                    help=arg.help
-                )
-            else:
-                self.parser.add_argument(
-                    *(arg.name),
-                    action='store_true',
-                    default=False,
-                    help=arg.help
-                )
-
-        else:
-            if arg.destination:
-                self.parser.add_argument(
-                    arg.name,
-                    dest=arg.destination,
-                    required=arg.required,
-                    type = arg.klass,
-                    help=arg.help
-                )
-            else:
-                self.parser.add_argument(
-                    arg.name,
-                    dest=arg.destination,
-                    required=arg.required,
-                    type = arg.klass,
-                    help=arg.help
-                )
-
     def __add_individual_argument(self, name:str, arg:Argument):
         if arg.klass is None:
             # It's a flag
@@ -175,11 +138,28 @@ class CommandArgs:
         return return_value.value
 
     def help(self) -> str:
-        return_val = "Invalid Usage - Command Help:\n"
-        return_val += "  {}\n".format(" ".join(self.prelude))
+        return_val = "Command Help: {}\n".format(" ".join(self.prelude))
+
+        required = []
+        optional = []
         for arg in self.arguments:
-            return_val += "   [{}] {} - {}\n".format(
-                ("R" if arg.required else "N"),
-                arg.name, 
-                arg.help)
+            if arg.required:
+                required.append(arg)
+            else:
+                optional.append(arg)
+
+        if len(required):
+            return_val += "   Required:\n"
+            for arg in required:
+                return_val += "     {} - {}\n".format(
+                    str(arg.name).ljust(28), 
+                    arg.help)
+        
+        if len(optional):
+            return_val += "   Optional:\n"
+            for arg in optional:
+                return_val += "     {} - {}\n".format(
+                    str(arg.name).ljust(28), 
+                    arg.help)
+
         return return_val

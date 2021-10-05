@@ -11,7 +11,7 @@ class AzAiAppCreate(ICommand):
         self.actual_command = ["az", "managedapp", "create"]
      
         arguments = [
-            Argument(["--name"], "name", True, str, "Application name"),
+            Argument("--name", "name", True, str, "Application name"),
             Argument("--kind", "kind", True, str, "Kind"),
             Argument("--managed-rg-id", "managed_group", True, str, "RG id for mgd")
         ]

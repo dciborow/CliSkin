@@ -1,6 +1,6 @@
 from interfaces.command import ICommand, CommandArgs
 from implementations.optionalparameters import GenericCommandOptionalParameters
-from implementations.commandline import CmdUtils
+from implementations import CmdUtils
 import json
 
 class AzGroupList(ICommand):

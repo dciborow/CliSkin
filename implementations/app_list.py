@@ -1,6 +1,6 @@
 from interfaces.command import ICommand, CommandArgs
 from implementations.optionalparameters import GenericCommandOptionalParameters
-from implementations.commandline import CmdUtils
+from implementations import CmdUtils, Defaults
 import json
 
 class AzAiAppList(ICommand):
@@ -14,9 +14,13 @@ class AzAiAppList(ICommand):
         filtered_args = [x for x in GenericCommandOptionalParameters.PARAMETERS if x.destination not in ["name"]]
         self.commands.add_arguments(filtered_args)
 
+        self.execution_context = Defaults.get_user_context()
 
     def execute(self):
+        print(self.commands.parse_result)
+        quit()
+        #print(json.dumps(self.execution_context.__dict__, indent=4))
         cmd_line = self.get_command_line(self.commands.parse_result)
-        print(json.dumps(cmd_line, indent=4))
+        #print(json.dumps(cmd_line, indent=4))
         output = CmdUtils.get_command_output(cmd_line)
         print(json.dumps(output, indent=4))

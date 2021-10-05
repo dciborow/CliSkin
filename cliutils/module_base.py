@@ -13,7 +13,11 @@ class ModuleBase:
             ModuleBase.PATH_INSERTS.append(directory)
             sys.path.insert(insert_location, directory)
         
-        self.module_actual = importlib.import_module(self.interface_module)
+        try:
+            self.module_actual = importlib.import_module(self.interface_module)
+        except Exception as ex:
+            print("FAILED X",insert_location, "Y", directory, "Z", self.interface_module)
+
 
     @staticmethod
     def get_python_modules(path:str):
@@ -21,7 +25,8 @@ class ModuleBase:
         return_modules = []
         for root, dirs, files in os.walk(path, topdown=False):
             for name in files:
-                name = name.lower()
-                if name[-3:] == PYTHON_FILTER and name != "__init__.py":
-                    return_modules.append(name[:-3])
+                if root == path:
+                    name = name.lower()
+                    if name[-3:] == PYTHON_FILTER and name != "__init__.py":
+                        return_modules.append(name[:-3])
         return return_modules

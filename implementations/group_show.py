@@ -1,6 +1,6 @@
 from interfaces.command import ICommand, CommandArgs, Argument
 from implementations.optionalparameters import GenericCommandOptionalParameters
-from implementations.commandline import CmdUtils
+from implementations import CmdUtils
 import json
 
 class AzGroupShow(ICommand):
@@ -12,7 +12,7 @@ class AzGroupShow(ICommand):
         self.actual_command = ["az", "group", "show"]
 
         arguments = [
-            Argument(["--name"], "name", True, str, "Application name")
+            Argument("--name", "name", True, str, "Application name")
         ]
 
         filtered_args = [x for x in GenericCommandOptionalParameters.PARAMETERS if x.destination not in ["name", "resource_group"]]
