@@ -18,7 +18,6 @@ class AzAiAppList(ICommand):
 
     def execute(self):
         print(self.commands.parse_result)
-        quit()
         #print(json.dumps(self.execution_context.__dict__, indent=4))
         cmd_line = self.get_command_line(self.commands.parse_result)
         #print(json.dumps(cmd_line, indent=4))
