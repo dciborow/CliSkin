@@ -15,6 +15,15 @@ class GenericCommandOptionalParameters:
         Argument(["--resource-group", "-g"], "resource_group", False, str, "Resource Group"),
     ]
 
+class GenericCommandMixedParameters:
+    # For some reason we can't combine some of these....gives an arg
+    # parse error so just keep them separated
+    PARAMETERS = [
+        Argument(["--name", "-n"], "name", True, str, "Application name"),
+        Argument(["--subscription", "-s"], "subscription", False, str, "Azure Subscription"),
+        Argument(["--resource-group", "-g"], "resource_group", True, str, "Resource Group"),
+    ]
+
 class ManagedAppCreateOptionalParameters:
     PARAMETERS = [
         Argument(["--location" "-l"], None, False, str, "Azure Region"),

@@ -8,6 +8,7 @@ class ModuleBase:
     def __init__(self, insert_location:int, directory:str, module:str):
         self.path = directory
         self.interface_module = module
+        self.module_actual = None
 
         if directory not in ModuleBase.PATH_INSERTS:
             ModuleBase.PATH_INSERTS.append(directory)
@@ -17,6 +18,7 @@ class ModuleBase:
             self.module_actual = importlib.import_module(self.interface_module)
         except Exception as ex:
             print("FAILED X",insert_location, "Y", directory, "Z", self.interface_module)
+            print(str(ex))
 
 
     @staticmethod

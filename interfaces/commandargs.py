@@ -30,47 +30,24 @@ class CommandArgs:
     def add_argument(self, arg: Argument):
         self.arguments.append(arg)
 
+        values = {
+            "help" :  arg.help,
+        }
+
+        if arg.destination:
+            values["dest"] = arg.destination
+    
+        if arg.klass:
+            values["required"]=arg.required
+            values["type"] = arg.klass
+        else:
+            values["action"] ='store_true'
+            values["default"] =False
+
         if isinstance(arg.name, list):
-            for name in arg.name:
-                self.__add_individual_argument(name, arg)
+            self.parser.add_argument(*arg.name, **values)
         else:
-            self.__add_individual_argument(arg.name, arg)
-
-    def __add_individual_argument(self, name:str, arg:Argument):
-        if arg.klass is None:
-            # It's a flag
-            if arg.destination:
-                self.parser.add_argument(
-                    name,
-                    dest=arg.destination,
-                    action='store_true',
-                    default=False,
-                    help=arg.help
-                )
-            else:
-                self.parser.add_argument(
-                    name,
-                    action='store_true',
-                    default=False,
-                    help=arg.help
-                )
-
-        else:
-            if arg.destination:
-                self.parser.add_argument(
-                    name,
-                    dest=arg.destination,
-                    required=arg.required,
-                    type = arg.klass,
-                    help=arg.help
-                )
-            else:
-                self.parser.add_argument(
-                    name,
-                    required=arg.required,
-                    type = arg.klass,
-                    help=arg.help
-                )
+            self.parser.add_argument(arg.name, **values)
 
     def add_arguments(self, args: typing.List[Argument]):
         for arg in args:

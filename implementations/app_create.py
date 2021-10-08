@@ -24,8 +24,5 @@ class AzAiAppCreate(ICommand):
 
 
     def execute(self):
-        print(self.__class__.__name__)
-        print(json.dumps(self.commands.parse_result, indent=4))
-
         cmd_line = self.get_command_line(self.commands.parse_result)
         print(json.dumps(cmd_line, indent=4))
