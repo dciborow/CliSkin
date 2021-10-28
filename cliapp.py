@@ -20,12 +20,7 @@ while True:
 
     if user_input in ["q", "Q", "quit"]:
         break
-    if user_input in ["h", "help", "?"]:
-        print("Command Overview")
-        for instance in interface_instances:
-            instance.overview()
-        continue
-
+    
     command_found = False
     for instance in interface_instances:
         parse_val = instance.validate_command(user_input)
@@ -46,4 +41,9 @@ while True:
             print("Exception:", str(ex) )
 
     if not command_found:
-        print("Command not found: ", user_input)
+        if user_input not in ["-h", "--help", "help", "-h", "?"]:
+            print("Command not found: ", user_input)
+        print("Available Commands")
+        for instance in interface_instances:
+            instance.overview()
+        continue

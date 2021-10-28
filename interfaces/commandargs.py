@@ -1,3 +1,4 @@
+import argparse
 from argparse import ArgumentParser
 from contextlib import redirect_stderr
 from enum import Enum
@@ -24,7 +25,9 @@ class CommandArgs:
     def __init__(self, description:str, prelude:list):
         self.arguments = []
         self.prelude = prelude
-        self.parser = ArgumentParser(description=description)
+        self.parser = ArgumentParser(
+            description=description,
+            usage=argparse.SUPPRESS)
         self.parse_result = {}
 
     def add_argument(self, arg: Argument):
@@ -102,7 +105,9 @@ class CommandArgs:
             redirect_io = io.StringIO()
             with redirect_stderr(redirect_io):  
                 try:
-                    parsed_values = self.parser.parse_args(usable_command)
+                    parsed_values = self.parser.parse_args(
+                        usable_command
+                    )
                         
                     self.parse_result = {}
                     for val in dir(parsed_values):
