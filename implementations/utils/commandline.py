@@ -33,7 +33,7 @@ class CmdUtils:
             try:
                 result = result.stdout.decode("utf-16")
             except Exception as ex:
-                print("Re-attempt failed with ", str(ex))
+                print("Re-attempt failed with ", ex)
                 result = None
 
         if as_json and result is not None and len(result):

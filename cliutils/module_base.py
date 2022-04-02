@@ -13,12 +13,12 @@ class ModuleBase:
         if directory not in ModuleBase.PATH_INSERTS:
             ModuleBase.PATH_INSERTS.append(directory)
             sys.path.insert(insert_location, directory)
-        
+
         try:
             self.module_actual = importlib.import_module(self.interface_module)
         except Exception as ex:
             print("FAILED X",insert_location, "Y", directory, "Z", self.interface_module)
-            print(str(ex))
+            print(ex)
 
 
     @staticmethod

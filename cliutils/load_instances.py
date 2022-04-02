@@ -8,12 +8,15 @@ class InstanceLoader(ModuleBase):
         loaded_instances = []
         for attr_name in dir(self.module_actual):
             attr = getattr(self.module_actual, attr_name)
-            
+
             try:
                 attr_actual = attr()
-                for bc in attr_actual.__class__.__bases__:
-                    if bc.__name__ == interface_type:
-                        loaded_instances.append(attr_actual)
+                loaded_instances.extend(
+                    attr_actual
+                    for bc in attr_actual.__class__.__bases__
+                    if bc.__name__ == interface_type
+                )
+
             except TypeError as ex:
                 pass
             except Exception as ex:
