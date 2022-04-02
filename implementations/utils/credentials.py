@@ -19,8 +19,7 @@ class Defaults:
 
         Defaults.CONTEXT = UserContext()
 
-        current = Defaults._get_current_account()
-        if current:
+        if current := Defaults._get_current_account():
             Defaults.CONTEXT.subscription = current["name"]
             Defaults.CONTEXT.subscription_id = current["id"]
             Defaults.CONTEXT.user = current["user"]["name"]

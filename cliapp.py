@@ -20,7 +20,7 @@ while True:
 
     if user_input in ["q", "Q", "quit"]:
         break
-    
+
     command_found = False
     for instance in interface_instances:
         parse_val = instance.validate_command(user_input)
@@ -38,7 +38,7 @@ while True:
             Else - Invalid -  it's not a command tied to this based on prelude
             """
         except Exception as ex:
-            print("Exception:", str(ex) )
+            print("Exception:", ex)
 
     if not command_found:
         if user_input not in ["-h", "--help", "help", "-h", "?"]:

@@ -45,27 +45,26 @@ class ICommand(ABC):
         command_line.extend(self.actual_command)
 
         arguments = []
-        for parameter in incoming_parameters:
+        for parameter, value in incoming_parameters.items():
             # Only check for something with an actual value
             if incoming_parameters[parameter] is not None:
                 arg = self.commands.find_argument(parameter)
 
                 if arg.klass is None and not incoming_parameters[parameter]:
                     # it's a flag and it's false, i.e. don't use. it
-                    continue 
+                    continue
                 if arg:
-                    arguments.append( (arg, incoming_parameters[parameter]) )
+                    arguments.append((arg, value))
 
         flags = []
         for arg in arguments:
             # Now add stuff to the command line
             if arg[0].klass:
-                command_line.append(arg[0].get_command())
-                command_line.append(arg[1])
+                command_line.extend((arg[0].get_command(), arg[1]))
             else:
                 flags.append(arg[0].get_command())
 
-        if len(flags) > 0:
+        if flags:
             command_line.extend(flags)
 
         return command_line
